@@ -14,7 +14,7 @@ model <- if(file.exists("data/model.rds"))
            readRDS("data/model.rds") else SS_output("boot/data/ss3")
 annual <- model$annual_time_series
 derived <- model$derived_quants
-dynamic <- model$Dynamic_Bzero
+dynamic <- model$Dynamic_Bzero[model$Dynamic_Bzero$Era == "TIME",]
 
 # Extract Frecent/Fmsy
 Ft <- setNames(annual$"F=Z-M", annual$year)
