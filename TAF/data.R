@@ -1,7 +1,8 @@
 # Prepare data, write CSV data tables
 
 # Before: fisheries.txt, ss3.zip (boot/data)
-# After:  cpue.csv, fisheries.csv, length_comps.csv, weight_comps.csv (data)
+# After:  cpue.csv, fisheries.csv, length_comps.csv, otoliths.csv,
+#         weight_comps.csv (data)
 
 library(TAF)
 library(r4ss)
@@ -25,6 +26,15 @@ length.comps <- length.comps[length.comps$sex == "f",]
 length.comps$part <- NULL
 length.comps$sex <- NULL
 
+# Otoliths
+otoliths <- age2long(dat$agecomp, expand=TRUE)
+otoliths$ageerr <- NULL
+otoliths$freq <- NULL
+otoliths$part <- NULL
+otoliths$Lbin_hi <- NULL
+otoliths$Nsamp <- NULL
+names(otoliths)[names(otoliths) == "Lbin_lo"] <- "Lbin"
+
 # Weight comps
 weight.comps <- comp2long(dat$sizefreq_data_list[[1]], measure="weight")
 weight.comps <- weight.comps[weight.comps$sex == "f",]
@@ -36,4 +46,5 @@ weight.comps$sex <- NULL
 write.taf(cpue, dir="data")
 write.taf(fisheries, dir="data", quote=TRUE)
 write.taf(length.comps, dir="data")
+write.taf(otoliths, dir="data")
 write.taf(weight.comps, dir="data")
