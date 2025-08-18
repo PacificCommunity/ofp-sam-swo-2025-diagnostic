@@ -1,7 +1,7 @@
 # Extract results of interest, write CSV output tables
 
-# Before: results.rds (model)
-# After:  kobe.csv (output)
+# Before: model.rds (model)
+# After:  kobe.csv, majuro.csv (output)
 
 library(TAF)
 
@@ -9,14 +9,18 @@ mkdir("output")
 
 # Read model results
 model <- readRDS("model/model.rds")
+annual <- model$annual_time_series
 derived <- model$derived_quants
 dynamic <- model$Dynamic_Bzero[model$Dynamic_Bzero$Era == "TIME",]
 
 # Extract SB_SBmsy and F_Fmsy
-SB_SBmsy <- derived$Value[grep("Bratio_[12]", derived$Label)]
-SB_SBmsy <- c(SB_SBmsy[1], SB_SBmsy)  # similar in year 1 and year 2
-F_Fmsy <- derived$Value[grep("F_[12]", derived$Label)]
-Year <- as.integer(sub("F_", "", grepv("F_[12]", derived$Label)))
+Year <- annual$year
+SB <- annual$SSB
+SBmsy <- derived$Value[derived$Label == "SSB_MSY"]
+SB_SBmsy <- SB / SBmsy
+Fmort <- annual$"F=Z-M"
+Fmsy <- derived$Value[derived$Label == "annF_MSY"]
+F_Fmsy <- Fmort / Fmsy
 
 # Extract SB_SBF0
 SB_SBF0 <- dynamic$SSB / dynamic$SSB_nofishing
