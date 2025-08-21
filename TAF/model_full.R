@@ -1,6 +1,6 @@
 # Run analysis, write model results
 
-# Before: ss3, ss3.exe (boot/software/3.30.23.1),
+# Before: ss3, ss3.exe (boot/software/ss3),
 #         forecast.ss, starter.ss, swo2025.ctl, swo2025.dat (boot/data/ss3)
 # After:  CompReport.sso, covar.sso, Forecast-report.sso, Report.sso,
 #         warning.sso, wtatage.ss_new (model)
