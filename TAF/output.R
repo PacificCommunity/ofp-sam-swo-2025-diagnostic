@@ -10,8 +10,11 @@ mkdir("output")
 # Read model results
 model <- readRDS("model/model.rds")
 annual <- model$annual_time_series
+biology <- model$biology
 derived <- model$derived_quants
 dynamic <- model$Dynamic_Bzero[model$Dynamic_Bzero$Era == "TIME",]
+endgrowth <- model$endgrowth
+Natural_Mortality <- model$Natural_Mortality
 
 # Extract SB_SBmsy and F_Fmsy
 Year <- annual$year
