@@ -11,10 +11,13 @@ mkdir("output")
 model <- readRDS("model/model.rds")
 annual <- model$annual_time_series
 biology <- model$biology
+row.names(biology) <- NULL
 derived <- model$derived_quants
 dynamic <- model$Dynamic_Bzero[model$Dynamic_Bzero$Era == "TIME",]
 endgrowth <- model$endgrowth
 Natural_Mortality <- model$Natural_Mortality
+parameters <- model$parameters[c("Label", "Value")]
+row.names(parameters) <- NULL
 
 # Extract SB_SBmsy and F_Fmsy
 Year <- annual$year
