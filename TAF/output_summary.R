@@ -1,7 +1,7 @@
-# Extract results of interest, write CSV output tables
+# Extract summary time series, write CSV output tables
 
 # Before: model.rds (model)
-# After:  kobe.csv, majuro.csv (output)
+# After:  summary.csv (output)
 
 library(TAF)
 
@@ -25,11 +25,8 @@ F_Fmsy <- Fmort / Fmsy
 # Extract SB_SBF0
 SB_SBF0 <- dynamic$SSB / dynamic$SSB_nofishing
 
-# Construct kobe and majuro data frames
-summary <- data.frame(Year, SB, F=Fmort, SB_SBmsy, F_Fmsy, SB_SBF0)
-kobe <- data.frame(Year, SB_SBmsy, F_Fmsy)
-majuro <- data.frame(Year, SB_SBF0, F_Fmsy)
+# Construct summary table
+summary <- data.frame(Year, SB, F=Fmort, SB_SBmsy, SB_SBF0, F_Fmsy)
 
 # Write table
-write.taf(kobe, dir="output")
-write.taf(majuro, dir="output")
+write.taf(summary, dir="output")
