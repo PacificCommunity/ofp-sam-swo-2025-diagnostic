@@ -21,20 +21,13 @@ row.names(stock.by.area) <- NULL
 
 # Calculate F by season
 f.season <- timeseries
-cols <- c("Area", "Yr", "Seas")
-f.season <- f.season[c(cols, grepv("F:_", names(f.season)))]
+f.season <- f.season[c(c("Area", "Yr", "Seas"), grepv("F:_", names(f.season)))]
 names(f.season) <- sub("F:_", "", names(f.season))
-rowlab <- apply(f.season[c("Area", "Yr", "Seas")], 1, paste, collapse = "|")
-f.season <- f.season[!names(f.season) %in% cols]
-row.names(f.season) <- rowlab
-f.season <- xtab2long(f.season, c("AYS", "Age", "F"))
-right <- f.season[c("Age", "F")]
-left <- read.table(text=f.season$AYS, sep = "|", col.names=cols)
-f.season <- cbind(left, right)
+f.season <- wide2long(f.season, names=c("Age", "F"))
 
 # Calculate F by year
 f.annual <- aggregate(F~Area+Yr+Age, f.season, sum)
-f.annual <- f.annual[order(f.annual$Area, f.annual$Age, f.annual$Yr),]
+f.annual <- f.annual[order(f.annual$Age, f.annual$Area, f.annual$Yr),]
 row.names(f.annual) <- NULL
 
 # Write tables
