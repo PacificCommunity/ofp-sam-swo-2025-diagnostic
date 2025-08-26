@@ -16,7 +16,7 @@ natage <- natage[natage$Seas == 1,]
 natage <- natage[natage$"Beg/Mid" == "B",]
 natage <- natage[natage$BirthSeas == 1,]
 natage <- natage[c("Area", "Sex", "Yr", grepv("[0-9]", names(natage)))]
-natage <- wide2long(natage)
+natage <- wide2long(natage, names=c("Age", "N"))
 
 # Write table
 write.taf(natage, dir="output")
