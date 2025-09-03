@@ -1,4 +1,3 @@
-source("output_biology.R")
 source("output_catch.R")
 source("output_fatage.R")
 source("output_fit.R")
