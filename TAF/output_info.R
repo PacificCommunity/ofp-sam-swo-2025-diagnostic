@@ -2,7 +2,7 @@
 
 # Before: model.rds (model)
 # After:  biology.csv, catch.csv, likelihoods.csv, movement.csv,
-#         stats.csv (output)
+#         selectivity.csv, stats.csv (output)
 
 library(TAF)
 library(r4ss)
@@ -39,6 +39,14 @@ movement <- subset(movement, Seas==1, c("Source_area", "Dest_area", "age0"))
 names(movement) <- c("Source", "Dest", "Rate")
 row.names(movement) <- NULL
 
+# Selectivity
+selectivity <- sizeselex[sizeselex$Factor == "Lsel",]
+selectivity <- selectivity[selectivity$Sex == 1,]
+selectivity <- selectivity[selectivity$Yr == model$endyr,]
+exclude <- c("Factor", "Yr", "Sex", "Label")
+selectivity <- selectivity[!names(selectivity) %in% exclude]
+selectivity <- taf2long(selectivity, names=c("Fleet", "Length", "Sel"))
+
 # Stats
 npar <- model$N_estimated_parameters
 objfun <- likelihoods$TOTAL
@@ -54,3 +62,4 @@ write.taf(catch, dir="output")
 write.taf(likelihoods, dir="output")
 write.taf(movement, dir="output")
 write.taf(stats, dir="output", quote=TRUE)
+write.taf(selectivity, dir="output")
