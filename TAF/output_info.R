@@ -15,6 +15,7 @@ catch <- model$catch
 endgrowth <- model$endgrowth
 likelihoods <- model$likelihoods_used
 movement <- model$movement
+sizeselex <- model$sizeselex
 
 # Biology
 biology <- subset(endgrowth, Seas==1 & Settlement==1,
