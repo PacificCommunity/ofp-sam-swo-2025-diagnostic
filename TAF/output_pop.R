@@ -1,7 +1,8 @@
 # Extract population results, write CSV output tables
 
 # Before: model.rds (model)
-# After:  fatage.csv, natage.csv, stock_area.csv, summary.csv (output)
+# After:  batage.csv, fatage.csv, natage.csv, stock_area.csv,
+#         summary.csv (output)
 
 library(TAF)
 
@@ -10,12 +11,20 @@ mkdir("output")
 # Read model results
 model <- readRDS("model/model.rds")
 annual <- model$annual_time_series
+batage <- model$batage[model$batage$Era == "TIME",]
 derived <- model$derived_quants
 dynamic <- model$Dynamic_Bzero[model$Dynamic_Bzero$Era == "TIME",]
 m.area <- model$M_by_area
 natage <- model$natage[model$natage$Era == "TIME",]
 timeseries <- model$timeseries[model$timeseries$Era == "TIME",]
 z.area <- model$Z_by_area
+
+# B at age
+batage <- batage[batage$Seas == 1,]
+batage <- batage[batage$"Beg/Mid" == "B",]
+batage <- batage[batage$BirthSeas == 1,]
+batage <- batage[c("Area", "Sex", "Yr", grepv("[0-9]", names(batage)))]
+batage <- wide2long(batage, names=c("Age", "B"))
 
 # F at age
 exclude <- c("Bio_Pattern", "BirthSeas", "Settlement", "Platoon", "Morph",
@@ -61,6 +70,7 @@ summary <- data.frame(Year, Rec, Catch, TB, SB, F=Fmort, SB_SBmsy, SB_SBF0,
                       F_Fmsy)
 
 # Write tables
+write.taf(batage, dir="output")
 write.taf(fatage, dir="output")
 write.taf(natage, dir="output")
 write.taf(stock.area, dir="output")
