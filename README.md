@@ -9,12 +9,9 @@ Download SWO 2025 diagnostic model:
 
 - Clone the **[swo-2025-diagnostic](https://github.com/PacificCommunity/ofp-sam-swo-2025-diagnostic)** repository or download as **[main.zip](https://github.com/PacificCommunity/ofp-sam-swo-2025-diagnostic/archive/refs/heads/main.zip)** file
 
-<!--
 Download SWO 2025 grid results:
 
-- The **[swo-2025-grid](https://github.com/PacificCommunity/ofp-sam-swo-2025-grid)** repository includes a **[swo-2025-grid-results.zip](https://github.com/PacificCommunity/ofp-sam-swo-2025-grid/releases/download/file/swo-2025-grid-results.zip)** file
-
--->
+- Clone the **[swo-2025-grid](https://github.com/PacificCommunity/ofp-sam-swo-2025-grid)** repository or download as **[main.zip](https://github.com/PacificCommunity/ofp-sam-swo-2025-grid/archive/refs/heads/main.zip)** file
 
 ## Reference model
 
