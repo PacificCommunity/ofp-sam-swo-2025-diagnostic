@@ -22,7 +22,7 @@ fisheries <- read.table("boot/initial/data/fisheries.txt", header=TRUE)
 
 # Length comps
 length.comps <- comp2long(dat$lencomp)
-length.comps <- length.comps[length.comps$sex == "f",]
+length.comps <- length.comps[length.comps$sex == 1,]
 length.comps$part <- NULL
 length.comps$sex <- NULL
 
@@ -37,7 +37,7 @@ names(otoliths)[names(otoliths) == "Lbin_lo"] <- "Lbin"
 
 # Weight comps
 weight.comps <- comp2long(dat$sizefreq_data_list[[1]], measure="weight")
-weight.comps <- weight.comps[weight.comps$sex == "f",]
+weight.comps <- weight.comps[weight.comps$sex == 1,]
 weight.comps$method <- NULL
 weight.comps$part <- NULL
 weight.comps$sex <- NULL
