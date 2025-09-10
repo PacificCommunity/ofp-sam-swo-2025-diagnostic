@@ -32,7 +32,7 @@ row.names(catch) <- NULL
 
 # Likelihoods
 likelihoods <- likelihoods[likelihoods$values != 0,]
-likelihoods <- as.data.frame(t(likelihoods["values"]))
+likelihoods <- xtab2taf(likelihoods, "component")
 
 # Movement
 movement <- subset(movement, Seas==1, c("Source_area", "Dest_area", "age0"))
@@ -49,7 +49,7 @@ selectivity <- taf2long(selectivity, names=c("Fleet", "Length", "Sel"))
 
 # Stats
 npar <- model$N_estimated_parameters
-objfun <- likelihoods$TOTAL
+objfun <- likelihoods$values[likelihoods$component == "TOTAL"]
 gradient <- model$maximum_gradient_component
 start <- sub("StartTime: ", "", model$StartTime)
 runtime <- sub("\\.$", "", model$RunTime)
