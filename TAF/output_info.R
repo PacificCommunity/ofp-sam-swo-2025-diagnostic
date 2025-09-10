@@ -19,10 +19,9 @@ sizeselex <- model$sizeselex
 
 # Biology
 biology <- subset(endgrowth, Seas==1 & Settlement==1,
-                  c("Sex", "Age_Beg", "M", "Len_Beg", "Wt_Beg", "Age_Mat"))
+                  c("Sex", "Age_Beg", "M", "Len_Beg", "Wt_Beg", "Mat_F_Natage"))
 names(biology) <- sub("_Beg", "", names(biology))
-names(biology) <- sub("Age_", "", names(biology))
-biology[biology < 0] <- NA
+names(biology) <- sub("_F_Natage", "", names(biology))
 row.names(biology) <- NULL
 
 # Catch
