@@ -32,7 +32,7 @@ row.names(catch) <- NULL
 
 # Likelihoods
 likelihoods <- likelihoods[likelihoods$values != 0,]
-likelihoods <- as.data.frame(t(likelihoods["values"]))
+likelihoods <- data.frame(t(likelihoods["values"]), row.names=NULL)
 
 # Movement
 movement <- movement[movement$Seas==1, c("Source_area", "Dest_area", "age0")]
