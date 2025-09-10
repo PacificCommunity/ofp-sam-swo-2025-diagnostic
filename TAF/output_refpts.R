@@ -40,6 +40,7 @@ refpts <- data.frame(Clatest, Flatest, Fmsy, Frecent, MSY, SB0, SBF0, SBlatest,
                      SBmsy, SBrecent, TBlatest, TBrecent, Flatest_Fmsy,
                      Frecent_Fmsy, SBlatest_SB0, SBlatest_SBF0, SBlatest_SBmsy,
                      SBrecent_SB0, SBrecent_SBF0, SBrecent_SBmsy)
+refpts <- data.frame(Metric=names(refpts), Value=unlist(refpts), row.names=NULL)
 
 # Write table
 write.taf(refpts, dir="output")
