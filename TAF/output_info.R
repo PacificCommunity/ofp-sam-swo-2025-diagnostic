@@ -35,7 +35,7 @@ likelihoods <- likelihoods[likelihoods$values != 0,]
 likelihoods <- xtab2taf(likelihoods, "component")
 
 # Movement
-movement <- subset(movement, Seas==1, c("Source_area", "Dest_area", "age0"))
+movement <- movement[movement$Seas==1, c("Source_area", "Dest_area", "age0")]
 names(movement) <- c("Source", "Dest", "Rate")
 row.names(movement) <- NULL
 
