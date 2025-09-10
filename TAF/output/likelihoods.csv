@@ -1,10 +1,2 @@
-component,values,lambdas
-TOTAL,1662.16,NA
-Catch,9.07003e-06,NA
-Survey,-58.411,NA
-Length_comp,117.421,NA
-Age_comp,262.739,NA
-SizeFreq,1351.99,NA
-Recruitment,-11.6078,1
-Parm_priors,0.0318925,1
-Parm_softbounds,0.00412006,NA
+TOTAL,Catch,Survey,Length_comp,Age_comp,SizeFreq,Recruitment,Parm_priors,Parm_softbounds
+1662.16,9.07003e-06,-58.411,117.421,262.739,1351.99,-11.6078,0.0318925,0.00412006

@@ -1,7 +1,9 @@
 # Produce plots and tables for report
 
-# Before: biology.csv, summary.csv (output)
-# After:  biology.csv, summary.csv (report)
+# Before: biology.csv, likelihoods.csv, stats.csv, stock_area.csv,
+#         summary.csv (output)
+# After:  biology.csv, likelihoods.csv, stats.csv, stock_area.png,
+#         summary.csv (report)
 
 library(TAF)
 
@@ -9,6 +11,8 @@ mkdir("report")
 
 # Read tables
 biology <- read.taf("output/biology.csv")
+likelihoods <- read.taf("output/likelihoods.csv")
+stats <- read.taf("output/stats.csv")
 stock.area <- read.taf("output/stock_area.csv")
 summary <- read.taf("output/summary.csv")
 
@@ -26,9 +30,15 @@ dev.off()
 
 # Format tables
 biology <- rnd(biology, c("M", "Len", "Wt", "Mat"), c(3, 1, 1, 3))
+likelihoods <- data.frame(component=names(likelihoods),
+                          value=unlist(likelihoods), row.names=NULL)
+likelihoods <- rnd(likelihoods, "value", 3)
+stats <- data.frame(info=names(stats), value=unlist(stats), row.names=NULL)
 summary <- rnd(summary, c("Rec", "Catch", "TB", "SB"))
 summary <- rnd(summary, c("F", "SB_SBmsy", "SB_SBF0", "F_Fmsy"), 2)
 
 # Write tables
 write.taf(biology, dir="report")
+write.taf(likelihoods, dir="report")
+write.taf(stats, dir="report", quote=TRUE)
 write.taf(summary, dir="report")
