@@ -14,10 +14,10 @@ annual <- model$annual_time_series
 batage <- model$batage[model$batage$Era == "TIME",]
 derived <- model$derived_quants
 dynamic <- model$Dynamic_Bzero[model$Dynamic_Bzero$Era == "TIME",]
-m.area <- model$M_by_area
+m.area <- model$M_by_area[model$M_by_area$Era == "TIME",]
 natage <- model$natage[model$natage$Era == "TIME",]
 timeseries <- model$timeseries[model$timeseries$Era == "TIME",]
-z.area <- model$Z_by_area
+z.area <- model$Z_by_area[model$Z_by_area$Era == "TIME",]
 
 # B at age
 batage <- batage[batage$Seas == 1,]
@@ -29,9 +29,9 @@ batage <- wide2long(batage, names=c("Age", "B"))
 # F at age
 exclude <- c("Bio_Pattern", "BirthSeas", "Settlement", "Platoon", "Morph",
              "Time", "Beg/Mid", "Era")
-m.area <- m.area[m.area$Era == "TIME" & m.area$BirthSeas == 1,]
+m.area <- m.area[m.area$BirthSeas == 1,]
 m.area <- m.area[!names(m.area) %in% exclude]
-z.area <- z.area[z.area$Era == "TIME" & z.area$BirthSeas == 1,]
+z.area <- z.area[z.area$BirthSeas == 1,]
 z.area <- z.area[!names(z.area) %in% exclude]
 m.area <- wide2long(m.area)
 z.area <- wide2long(z.area)
