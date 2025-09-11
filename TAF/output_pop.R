@@ -1,8 +1,8 @@
 # Extract population results, write CSV output tables
 
 # Before: model.rds (model)
-# After:  batage.csv, fatage.csv, natage.csv, timeseries_area.csv,
-#         summary.csv (output)
+# After:  batage.csv, fatage.csv, natage.csv, summary.csv,
+#         timeseries_area.csv, (output)
 
 library(TAF)
 
