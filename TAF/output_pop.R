@@ -1,7 +1,7 @@
 # Extract population results, write CSV output tables
 
 # Before: model.rds (model)
-# After:  batage.csv, fatage.csv, natage.csv, stock_area.csv,
+# After:  batage.csv, fatage.csv, natage.csv, timeseries_area.csv,
 #         summary.csv (output)
 
 library(TAF)
@@ -48,13 +48,12 @@ natage <- natage[natage$BirthSeas == 1,]
 natage <- natage[c("Area", "Sex", "Yr", grepv("[0-9]", names(natage)))]
 natage <- wide2long(natage, names=c("Age", "N"))
 
-# Stock by area
-stock.area <- timeseries[timeseries$Seas == 1,]
-names(stock.area)[names(stock.area) == "Recruit_0"] <- "Rec"
-names(stock.area)[names(stock.area) == "Bio_all"] <- "TB"
-names(stock.area)[names(stock.area) == "SpawnBio"] <- "SB"
-stock.area <- stock.area[c("Area", "Yr", "Rec", "TB", "SB")]
-row.names(stock.area) <- NULL
+# Time series by area
+timeseries.area <- timeseries[timeseries$Seas == 1,]
+names(timeseries.area)[names(timeseries.area) == "Recruit_0"] <- "Rec"
+names(timeseries.area)[names(timeseries.area) == "Bio_all"] <- "TB"
+names(timeseries.area)[names(timeseries.area) == "SpawnBio"] <- "SB"
+timeseries.area <- timeseries.area[c("Area", "Yr", "Rec", "TB", "SB")]
 
 # Summary
 Year <- annual$year
@@ -73,5 +72,5 @@ summary <- data.frame(Year, Rec, Catch, TB, SB, F=Fmort, SB_SBmsy, SB_SBF0,
 write.taf(batage, dir="output")
 write.taf(fatage, dir="output")
 write.taf(natage, dir="output")
-write.taf(stock.area, dir="output")
+write.taf(timeseries.area, dir="output")
 write.taf(summary, dir="output")

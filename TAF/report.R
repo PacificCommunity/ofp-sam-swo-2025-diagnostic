@@ -1,8 +1,8 @@
 # Produce plots and tables for report
 
-# Before: biology.csv, likelihoods.csv, stats.csv, stock_area.csv,
+# Before: biology.csv, likelihoods.csv, stats.csv, timeseries_area.csv,
 #         summary.csv (output)
-# After:  biology.csv, likelihoods.csv, stats.csv, stock_area.png,
+# After:  biology.csv, likelihoods.csv, stats.csv, timeseries_area.png,
 #         summary.csv (report)
 
 library(TAF)
@@ -13,17 +13,17 @@ mkdir("report")
 biology <- read.taf("output/biology.csv")
 likelihoods <- read.taf("output/likelihoods.csv")
 stats <- read.taf("output/stats.csv")
-stock.area <- read.taf("output/stock_area.csv")
+timeseries.area <- read.taf("output/timeseries_area.csv")
 summary <- read.taf("output/summary.csv")
 
-# Plot stock by area
-taf.png("stock_area")
-plot(SB~Yr, stock.area, ylim=c(0,50e3), type="n", xlab="Year",
+# Plot time series of SB by area
+taf.png("timeseries_area")
+plot(SB~Yr, timeseries.area, ylim=c(0,50e3), type="n", xlab="Year",
      ylab="Spawning biomass (t)", bty="n")
 abline(h=seq(0, 50e3, 10e3), col="gray", lty=3)
 box()
-lines(SB~Yr, stock.area, subset=Area==1, lwd=3, col=5)
-lines(SB~Yr, stock.area, subset=Area==2, lwd=3, col=6)
+lines(SB~Yr, timeseries.area, subset=Area==1, lwd=3, col=5)
+lines(SB~Yr, timeseries.area, subset=Area==2, lwd=3, col=6)
 legend("bottomright", c("Area 1","Area 2"), lwd=3, col=c(5,6), bty="n",
        inset=0.04, y.intersp=1.25)
 dev.off()
