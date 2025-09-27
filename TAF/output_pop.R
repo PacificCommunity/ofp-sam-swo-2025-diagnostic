@@ -1,7 +1,7 @@
 # Extract population results, write CSV output tables
 
 # Before: model.rds (model)
-# After:  batage.csv, fatage.csv, natage.csv, summary.csv,
+# After:  biomass.csv, f_age.csv, f_area.csv, natage.csv, summary.csv,
 #         timeseries_area.csv, (output)
 
 library(TAF)
@@ -14,19 +14,32 @@ annual <- model$annual_time_series
 batage <- model$batage[model$batage$Era == "TIME",]
 derived <- model$derived_quants
 dynamic <- model$Dynamic_Bzero[model$Dynamic_Bzero$Era == "TIME",]
+m.age <- model$M_at_age
 m.area <- model$M_by_area[model$M_by_area$Era == "TIME",]
 natage <- model$natage[model$natage$Era == "TIME",]
 timeseries <- model$timeseries[model$timeseries$Era == "TIME",]
+z.age <- model$Z_at_age
 z.area <- model$Z_by_area[model$Z_by_area$Era == "TIME",]
 
-# B at age
-batage <- batage[batage$Seas == 1,]
-batage <- batage[batage$"Beg/Mid" == "B",]
-batage <- batage[batage$BirthSeas == 1,]
-batage <- batage[c("Area", "Sex", "Yr", grepv("[0-9]", names(batage)))]
-batage <- wide2long(batage, names=c("Age", "B"))
+# Biomass
+biomass <- batage[batage$Seas == 1,]
+biomass <- biomass[biomass$"Beg/Mid" == "B",]
+biomass <- biomass[biomass$BirthSeas == 1,]
+biomass <- biomass[c("Area", "Sex", "Yr", grepv("[0-9]", names(biomass)))]
+biomass <- wide2long(biomass, names=c("Age", "B"))
 
 # F at age
+m.age$Bio_Pattern <- NULL
+z.age$Bio_Pattern <- NULL
+m.age <- wide2long(m.age)
+z.age <- wide2long(z.age)
+m.age <- m.age[!is.na(m.age$Value),]
+z.age <- z.age[!is.na(z.age$Value),]
+f.age <- z.age
+f.age$Value <- z.age$Value - m.age$Value
+names(f.age)[names(f.age) == "Value"] <- "F"
+
+# F by area
 exclude <- c("Bio_Pattern", "BirthSeas", "Settlement", "Platoon", "Morph",
              "Time", "Beg/Mid", "Era")
 m.area <- m.area[m.area$BirthSeas == 1,]
@@ -37,9 +50,9 @@ m.area <- wide2long(m.area)
 z.area <- wide2long(z.area)
 m.area <- aggregate(Value~Area+Sex+Yr+Age, m.area, mean)
 z.area <- aggregate(Value~Area+Sex+Yr+Age, z.area, mean)
-fatage <- z.area
-fatage$Value <- z.area$Value - m.area$Value
-names(fatage)[names(fatage) == "Value"] <- "F"
+f.area <- z.area
+f.area$Value <- z.area$Value - m.area$Value
+names(f.area)[names(f.area) == "Value"] <- "F"
 
 # N at age
 natage <- natage[natage$Seas == 1,]
@@ -69,8 +82,9 @@ summary <- data.frame(Year, Rec, Catch, TB, SB, F=Fmort, SB_SBmsy, SB_SBF0,
                       F_Fmsy)
 
 # Write tables
-write.taf(batage, dir="output")
-write.taf(fatage, dir="output")
+write.taf(biomass, dir="output")
+write.taf(f.age, dir="output")
+write.taf(f.area, dir="output")
 write.taf(natage, dir="output")
 write.taf(timeseries.area, dir="output")
 write.taf(summary, dir="output")
