@@ -17,7 +17,7 @@ stats <- read.taf("output/stats.csv")
 timeseries.area <- read.taf("output/timeseries_area.csv")
 summary <- read.taf("output/summary.csv")
 
-# Plot growth curves superposed on otoliths
+# Plot growth curves on top of otoliths
 taf.png("growth")
 par(mfrow=c(1,2))
 plot(NA, xlab="Age (yr)", ylab="Length (cm)", xlim=lim(as.numeric(biology$Age)),
