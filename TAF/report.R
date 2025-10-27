@@ -1,9 +1,9 @@
 # Produce plots and tables for report
 
-# Before: biology.csv, likelihoods.csv, stats.csv, timeseries_area.csv,
-#         summary.csv (output)
-# After:  biology.csv, likelihoods.csv, stats.csv, timeseries_area.png,
-#         summary.csv (report)
+# Before: otoliths.csv (data), biology.csv, likelihoods.csv, stats.csv,
+#         timeseries_area.csv, summary.csv (output)
+# After:  biology.csv, growth.png, likelihoods.csv, stats.csv,
+#         timeseries_area.png, summary.csv (report)
 
 library(TAF)
 
@@ -12,9 +12,23 @@ mkdir("report")
 # Read tables
 biology <- read.taf("output/biology.csv")
 likelihoods <- read.taf("output/likelihoods.csv")
+otoliths <- read.taf("data/otoliths.csv")
 stats <- read.taf("output/stats.csv")
 timeseries.area <- read.taf("output/timeseries_area.csv")
 summary <- read.taf("output/summary.csv")
+
+# Plot growth curves superposed on otoliths
+taf.png("growth")
+par(mfrow=c(1,2))
+plot(NA, xlab="Age (yr)", ylab="Length (cm)", xlim=lim(as.numeric(biology$Age)),
+     ylim=lim(as.numeric(c(biology$Len, otoliths$Lbin))))
+points(Lbin~age, otoliths, subset=sex==1, pch=16, col=adjustcolor(2, 0.3))
+lines(Len~Age, biology, subset=Sex==1, lwd=3, col=2)
+plot(NA, xlab="Age (yr)", ylab="Length (cm)", xlim=lim(as.numeric(biology$Age)),
+     ylim=lim(as.numeric(c(biology$Len, otoliths$Lbin))))
+points(Lbin~age, otoliths, subset=sex==2, pch=16, col=adjustcolor(4, 0.3))
+lines(Len~Age, biology, subset=Sex==2, lwd=3, col=4)
+dev.off()
 
 # Plot time series of SB by area
 taf.png("timeseries_area")
