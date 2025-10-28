@@ -2,8 +2,8 @@
 
 # Before: otoliths.csv (data), biology.csv, likelihoods.csv, stats.csv,
 #         timeseries_area.csv, summary.csv (output)
-# After:  biology.csv, growth.png, likelihoods.csv, stats.csv,
-#         timeseries_area.png, summary.csv (report)
+# After:  biology.csv, biomass_area.png, growth.png, likelihoods.csv, stats.csv,
+#         summary.csv (report)
 
 library(TAF)
 
@@ -16,6 +16,18 @@ otoliths <- read.taf("data/otoliths.csv")
 stats <- read.taf("output/stats.csv")
 timeseries.area <- read.taf("output/timeseries_area.csv")
 summary <- read.taf("output/summary.csv")
+
+# Plot biomass by area
+taf.png("biomass_area")
+plot(SB~Yr, timeseries.area, ylim=c(0,50e3), type="n", xlab="Year",
+     ylab="Spawning biomass (t)", bty="n")
+abline(h=seq(0, 50e3, 10e3), col="gray", lty=3)
+box()
+lines(SB~Yr, timeseries.area, subset=Area==1, lwd=3, col=5)
+lines(SB~Yr, timeseries.area, subset=Area==2, lwd=3, col=6)
+legend("bottomright", c("Area 1","Area 2"), lwd=3, col=c(5,6), bty="n",
+       inset=0.04, y.intersp=1.25)
+dev.off()
 
 # Plot growth curves on top of otoliths
 taf.png("growth")
@@ -30,18 +42,6 @@ plot(NA, xlim=range(as.numeric(biology$Age)),
      xlab="Age (yr)", ylab="Length (cm)")
 points(Lbin~age, otoliths, subset=sex==2, pch=16, col=adjustcolor(4, 0.3))
 lines(Len~Age, biology, subset=Sex==2, lwd=3, col=4)
-dev.off()
-
-# Plot time series of SB by area
-taf.png("timeseries_area")
-plot(SB~Yr, timeseries.area, ylim=c(0,50e3), type="n", xlab="Year",
-     ylab="Spawning biomass (t)", bty="n")
-abline(h=seq(0, 50e3, 10e3), col="gray", lty=3)
-box()
-lines(SB~Yr, timeseries.area, subset=Area==1, lwd=3, col=5)
-lines(SB~Yr, timeseries.area, subset=Area==2, lwd=3, col=6)
-legend("bottomright", c("Area 1","Area 2"), lwd=3, col=c(5,6), bty="n",
-       inset=0.04, y.intersp=1.25)
 dev.off()
 
 # Format tables
