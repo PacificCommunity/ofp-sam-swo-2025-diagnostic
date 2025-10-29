@@ -2,7 +2,7 @@
 
 # After:  ss3 (boot/data)
 # After:  CompReport.sso, covar.sso, Forecast-report.sso, Report.sso,
-#         warning.sso, wtatage.ss_new (model)
+#         ss3.par, warning.sso, wtatage.ss_new (model)
 
 library(TAF)
 
